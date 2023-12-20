@@ -15,7 +15,11 @@ import Axios from "axios";
 function App() {
   const[catFact,setCatFact]=useState("");
   const [characterNames, setCharacterNames] = useState([]);
-
+const fetchCatFact=() =>{
+  Axios.get("https://swapi.dev/api/people/").then((res) =>{
+  setCatFact(res.data.fact);
+  });
+}
 useEffect(()=>{
   Axios.get("https://swapi.dev/api/people/").then((res) =>{
     const names = res.data.results.map(character => character.name)
@@ -62,7 +66,7 @@ useEffect(()=>{
   return (
 
     <div className="App">
-      <button onClick={generateCatFact}> generate Cat Fact</button>
+      <button onClick={fetchCatFact}> generate Cat Fact</button>
       <p> {catFact}</p>
       <ul>
         {characterNames.map((name, index) => (
