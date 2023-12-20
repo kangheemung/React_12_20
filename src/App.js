@@ -6,23 +6,22 @@ import Name from './H1/Name';
 import Planets from './H1/Planets';
 import Age from './H1/Age';
 import Button from './H1/Button';
+import User from './User/index';
+import Axios from "axios";
+
+
+
 
 function App() {
+  const[catFact,setCatFact]=useState("");
 
-  const [ todoList, setTodoList ] = useState([]);
-  const [ newTask, setNewTask ] = useState("");
+      Axios.get("https://swapi.dev/api/people/").then((res) =>{
+        console.log(res.data.fact);
 
-  const handleTodoChange = (event) => {
-    setNewTask(event.target.value);
-  };
-const addTask=()=>{
-  const task = {
-    id :todoList.length === 0 ? 1:todoList[todoList.length - 1].id+1,
-    taskName: newTask,
+      });
 
-  }
-  setTodoList([...todoList, task]);
-};  //{
+
+ //{
    // id:1,
     //taskName: "do homework"
  // }
@@ -43,9 +42,7 @@ const addTask=()=>{
   //const name= "Padro"
   //arr.push(name)
  //};
- const deleteTask = (id) => {
-  setTodoList(todoList.filter((task) => task.id !== id));
-  }
+
   //const arr=["kang","nana", "james"]
   //const newArr =arr.filter((name)=>{
     //if (name === "kang"){
@@ -56,29 +53,20 @@ const addTask=()=>{
 
 
   return (
-    <div className="App" style={{ backgroundColor: '#DBE5E6' }}>
-      {/* {header} {/* Render the appropriate header based on the age condition */}
-        <div className = "addTast">
-          <input onChange={handleTodoChange}/>
-          <p><button onClick={addTask}> Add Task</button></p>
-        </div>
-        <div className = "list">
-          {todoList.map((task) => {
-            return(
-            <div>
-              <h1>{task.taskName}</h1>
-              <button onClick={()=>deleteTask(task.id)}>X</button>
-            </div>
-          );
-          })}
-        </div>
 
-      <Button />
-      <Age />
-      <H1 />
-      <Test />
-      <Name />
-      <Planets />
+    <div className="App">
+      <button> generate Cat Fact</button>
+      <p> {catFact}</p>
+
+      <div className="addTask">
+        <User />
+        <Button />
+        <Age />
+        <H1 />
+        <Test />
+        <Name />
+        <Planets />
+      </div>
     </div>
   );
 }
