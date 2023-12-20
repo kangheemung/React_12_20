@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState ,useEffect} from 'react';
 import './App.css';
 import H1 from './H1/H1';
 import Test from './Test';
@@ -14,11 +14,15 @@ import Axios from "axios";
 
 function App() {
   const[catFact,setCatFact]=useState("");
+  const [characterNames, setCharacterNames] = useState([]);
 
-      Axios.get("https://swapi.dev/api/people/").then((res) =>{
-        console.log(res.data.fact);
+useEffect(()=>{
+  Axios.get("https://swapi.dev/api/people/").then((res) =>{
+    const names = res.data.results.map(character => character.name)
+    setCharacterNames(names);
+  });
+},[]);
 
-      });
 
 
  //{
@@ -50,13 +54,21 @@ function App() {
     //}else{
      // return true;
     //}
+    const generateCatFact = () => {
+      // Insert logic to fetch and update cat fact here
+    };
 
 
   return (
 
     <div className="App">
-      <button> generate Cat Fact</button>
+      <button onClick={generateCatFact}> generate Cat Fact</button>
       <p> {catFact}</p>
+      <ul>
+        {characterNames.map((name, index) => (
+          <li key={index}>{name}</li>
+        ))}
+      </ul>
 
       <div className="addTask">
         <User />
